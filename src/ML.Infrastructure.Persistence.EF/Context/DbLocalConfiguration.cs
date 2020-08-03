@@ -2,7 +2,7 @@
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.SqlServerCompact;
 
-namespace Common.Infrastructure.EF.Context
+namespace ML.Infrastructure.Persistence.EF.Context
 {
     public class DbLocalConfiguration : DbConfiguration
     {

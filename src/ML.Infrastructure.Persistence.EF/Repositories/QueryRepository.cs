@@ -49,6 +49,13 @@ namespace ML.Infrastructure.Persistence.EF.Repositories
             if (orderBy != null)
                 query = orderBy(query);
 
+            return Get(query, page, pageSize, trackingEnabled);
+        }
+
+        public virtual PagedList<TEntity> Get(IQueryable<TEntity> query,
+            int page = 0, int pageSize = 50,            
+            bool trackingEnabled = false)
+        {
             return new PagedList<TEntity>(trackingEnabled ? query : query.AsNoTracking(), page, pageSize);
         }
 

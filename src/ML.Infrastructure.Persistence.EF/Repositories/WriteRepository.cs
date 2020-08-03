@@ -1,66 +1,60 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using Common.Data.Contracts.Respositories;
-using ML.Infrastructure.Persistence.EF.Configuration;
-using ML.Infrastructure.Persistence.EF.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ML.Data.Contracts.Respositories;
+using System.Collections.Generic;
 
-namespace Common.Infrastructure.EF.Repositories
+namespace ML.Infrastructure.Persistence.EF.Repositories
 {
     public class WriteRepository<TEntity> : QueryRepository<TEntity>, IWriteRepository<TEntity> where TEntity : class
-    {
-
-        public WriteRepository(EFCommonConfiguration configuration) : base(configuration)
-        {
-
-        }
-        public WriteRepository(DbContext context) : base(context)
+    {  
+        public WriteRepository(DbContext context) 
+            : base(context)
         {
 
         }
 
         public void Insert(TEntity entity)
         {
-            this._DbSet.Add(entity);
+            _DbSet.Add(entity);
         }
 
         public void InsertMany(IEnumerable<TEntity> entities)
         {
-            bool detectChangesEnabled = this.Context.Configuration.AutoDetectChangesEnabled;
+            bool detectChangesEnabled = Context.Configuration.AutoDetectChangesEnabled;
             try
             {
                 if (detectChangesEnabled)
-                    this.Context.Configuration.AutoDetectChangesEnabled = false;
-                this._DbSet.AddRange(entities);
+                    Context.Configuration.AutoDetectChangesEnabled = false;
+                _DbSet.AddRange(entities);
             }
             finally
             {
-                this.Context.Configuration.AutoDetectChangesEnabled = detectChangesEnabled;
+                Context.Configuration.AutoDetectChangesEnabled = detectChangesEnabled;
             }
         }
 
 
         public void Update(TEntity entity)
         {
-            if ((object)entity == null || this.Context.Entry<TEntity>(entity).State != EntityState.Detached)
+            if (entity == null || Context.Entry(entity).State != EntityState.Detached)
                 return;
-            this.Context.Entry<TEntity>(entity).State = EntityState.Modified;
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void UpdateMany(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 return;
-            bool detectChangesEnabled = this.Context.Configuration.AutoDetectChangesEnabled;
+            bool detectChangesEnabled = Context.ChangeTracker.AutoDetectChangesEnabled;
             try
             {
                 if (detectChangesEnabled)
-                    this.Context.Configuration.AutoDetectChangesEnabled = false;
+                    Context.ChangeTracker.AutoDetectChangesEnabled = false;
                 foreach (TEntity entity in entities)
-                    this.Update(entity);
+                    Update(entity);
             }
             finally
             {
-                this.Context.Configuration.AutoDetectChangesEnabled = detectChangesEnabled;
+                Context.ChangeTracker.AutoDetectChangesEnabled = detectChangesEnabled;
             }
         }
 
@@ -68,10 +62,10 @@ namespace Common.Infrastructure.EF.Repositories
 
         public void Delete(object id)
         {
-            TEntity entity = this._DbSet.Find(id);
-            if ((object)entity == null)
+            TEntity entity = _DbSet.Find(id);
+            if (entity == null)
                 return;
-            this.Delete(entity);
+            Delete(entity);
         }
 
         public void DeleteMany(IEnumerable<object> ids)
@@ -79,43 +73,43 @@ namespace Common.Infrastructure.EF.Repositories
             try
             {
                 List<TEntity> list = new List<TEntity>();
-                this.Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.ChangeTracker.AutoDetectChangesEnabled = false;
                 foreach (object obj in ids)
                 {
-                    TEntity entity = this._DbSet.Find(obj);
-                    if ((object)entity != null)
+                    TEntity entity = _DbSet.Find(obj);
+                    if (entity != null)
                         list.Add(entity);
                 }
-                this.DeleteMany((IEnumerable<TEntity>)list);
+                DeleteMany(list);
             }
             finally
             {
-                this.Context.Configuration.AutoDetectChangesEnabled = true;
+                Context.ChangeTracker.AutoDetectChangesEnabled = true;
             }
         }
 
         public void Delete(TEntity entity)
         {
-            if ((object)entity == null)
+            if (entity == null)
                 return;
-            this.Context.Entry<TEntity>(entity).State = EntityState.Deleted;
+            Context.Entry(entity).State = EntityState.Deleted;
         }
 
         public virtual void DeleteMany(IEnumerable<TEntity> entities)
         {
-            bool detectChangesEnabled = this.Context.Configuration.AutoDetectChangesEnabled;
+            bool detectChangesEnabled = Context.ChangeTracker.AutoDetectChangesEnabled;
             try
             {
                 if (entities == null)
                     return;
                 if (detectChangesEnabled)
-                    this.Context.Configuration.AutoDetectChangesEnabled = false;
+                    Context.ChangeTracker.AutoDetectChangesEnabled = false;
                 foreach (TEntity entity in entities)
-                    this.Delete(entity);
+                    Delete(entity);
             }
             finally
             {
-                this.Context.Configuration.AutoDetectChangesEnabled = detectChangesEnabled;
+                Context.ChangeTracker.AutoDetectChangesEnabled = detectChangesEnabled;
             }
         }
     }

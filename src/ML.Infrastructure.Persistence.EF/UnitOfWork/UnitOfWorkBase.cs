@@ -1,5 +1,4 @@
-﻿using Common.Infrastructure.EF.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ML.Data.Contracts.Respositories;
 using ML.Data.Contracts.UnitOfWork;
 using ML.Infrastructure.Persistence.EF.Repositories;
@@ -14,7 +13,7 @@ namespace Common.Infrastructure.EF.UnitOfWork
         private bool _disposed;
         private Hashtable _repositories;
                
-        private UnitOfWorkBase(DbContext context)
+        public UnitOfWorkBase(DbContext context)
         {
             this._context = context;
         }
