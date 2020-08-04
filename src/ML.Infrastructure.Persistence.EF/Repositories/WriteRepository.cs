@@ -19,16 +19,16 @@ namespace ML.Infrastructure.Persistence.EF.Repositories
 
         public void InsertMany(IEnumerable<TEntity> entities)
         {
-            bool detectChangesEnabled = Context.Configuration.AutoDetectChangesEnabled;
+            bool detectChangesEnabled = Context.ChangeTracker.AutoDetectChangesEnabled;
             try
             {
                 if (detectChangesEnabled)
-                    Context.Configuration.AutoDetectChangesEnabled = false;
+                    Context.ChangeTracker.AutoDetectChangesEnabled = false;
                 _DbSet.AddRange(entities);
             }
             finally
             {
-                Context.Configuration.AutoDetectChangesEnabled = detectChangesEnabled;
+                Context.ChangeTracker.AutoDetectChangesEnabled = detectChangesEnabled;
             }
         }
 

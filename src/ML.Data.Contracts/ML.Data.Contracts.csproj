@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Marcos Lopez</Authors>
+    <Company />
+    <Product />
+    <PackageProjectUrl>https://github.com/marcoslg/Searchable</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

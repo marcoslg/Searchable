@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+  <!-- Parameters used by tests at runtime -->
+  <TestRunParameters>
+    <!--<Parameter name="Authority" value="https://localhost:44304" />-->
+    <Parameter name="Authority" value="https://identity-sts-viseo-spain.azurewebsites.net/" />
+    <Parameter name="ClientId" value="integrationTest" />
+
+    <Parameter name="Username" value="integrationTest" />
+    <Parameter name="Password" value="Pa$$word123" />
+
+    <Parameter name="Policies:HttpCircuitBreaker:DurationOfBreak" value="00:01:00" />
+    <Parameter name="Policies:HttpCircuitBreaker:ExceptionsAllowedBeforeBreaking" value="20" />
+
+    <Parameter name="Policies:HttpRetry:BackoffPower" value="2" />
+    <Parameter name="Policies:HttpRetry:Count" value="3" />
+
+    <!--<Parameter name="AuthorizeApi:BaseAddress" value="https://localhost:44387/" />-->
+    <Parameter name="AuthorizeApi:BaseAddress" value="https://authorize-viseo-spain.azurewebsites.net/" />
+    <Parameter name="AuthorizeApi:Timeout" value="00:00:40" />
+    <Parameter name="AuthorizeApi:Headers:X-Api-Key" value="123" />
+    <Parameter name="ApplicationName" value="AuthorizeAppServicesGatewaysTest" />
+  </TestRunParameters>
+
+</RunSettings>
