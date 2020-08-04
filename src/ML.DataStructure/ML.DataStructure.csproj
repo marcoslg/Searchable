@@ -6,6 +6,7 @@
     <Authors>Marcos Lopez</Authors>
     <Product />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/marcoslg/Searchable</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
