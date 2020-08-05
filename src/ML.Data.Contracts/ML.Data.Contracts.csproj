@@ -8,6 +8,11 @@
     <PackageProjectUrl>https://github.com/marcoslg/Searchable</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/marcoslg/Searchable</RepositoryUrl>
+    <Description>Part of collection where we can searchable and pagination easy using EF
+ML.Infrastructure.Persistence.EF abstraction. This package use ML.DataStructure.</Description>
+    <Version>1.0.1</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

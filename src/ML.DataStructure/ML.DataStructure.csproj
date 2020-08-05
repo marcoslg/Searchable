@@ -7,6 +7,11 @@
     <Product />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/marcoslg/Searchable</RepositoryUrl>
+    <Description>Part of collection where we can searchable and pagination easy using EF.
+This package have the entities for pagination.</Description>
+    <Version>1.0.1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
 </Project>
