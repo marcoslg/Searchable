@@ -37,8 +37,8 @@ namespace ML.DataStructure.Collections.DTO
                 Page = Page,
                 PageSize = PageSize
             };
-            result.FilterDescriptors = FilterDescriptorParser.ListFromString(org.FilterDescriptors);
-            result.SortDescriptors = SortDescriptorParser.ListFromString(org.SortDescriptors);
+            result.FilterDescriptors = FilterDescriptorParser.ListFromString(FilterDescriptors);
+            result.SortDescriptors = SortDescriptorParser.ListFromString(SortDescriptors);
             return result;
         }
     }
