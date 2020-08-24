@@ -35,40 +35,40 @@ namespace ML.DataStructure.Linq
             if (search.FilterDescriptors != null)
             {
                 foreach (FilterDescriptor child in search.FilterDescriptors)
-                {
-                    Expression member;
+                {                    
                     MethodInfo method;
+                    Expression member = Expression.Property(parameterExpressionInvoice, child.Member);
+                    var value = ConvertTypeValue(child.Value, member.Type);
                     switch (child.Operator)
                     {
-                        case FilterOperator.IsEqualTo:
-                            member = Expression.Property(parameterExpressionInvoice, child.Member);
+                        case FilterOperator.IsEqualTo:                            
                             comparison = Expression.Equal(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.IsNotEqualTo:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
                             comparison = Expression.NotEqual(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.IsGreaterThan:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
                             comparison = Expression.GreaterThan(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.IsGreaterThanOrEqualTo:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
                             comparison = Expression.GreaterThanOrEqual(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.IsLessThan:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
                             comparison = Expression.LessThan(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.IsLessThanOrEqualTo:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
                             comparison = Expression.LessThanOrEqual(member,
-                                Expression.Convert(Expression.Constant(child.Value), member.Type));
+                                Expression.Convert(Expression.Constant(value), member.Type));
                             break;
                         case FilterOperator.Contains:
                             member = Expression.Property(parameterExpressionInvoice, child.Member);
@@ -97,7 +97,7 @@ namespace ML.DataStructure.Linq
                             break;
                     }
 
-                    result = result == null ? comparison : Expression.And(result, comparison);
+                    result = result == null ? comparison : Expression.AndAlso(result, comparison);
                 }
             }
 
@@ -105,7 +105,18 @@ namespace ML.DataStructure.Linq
             return Expression.Lambda<Func<TSource, bool>>(result, parameterExpressionInvoice);
         }
 
-
+        static object ConvertTypeValue(object value, Type type)
+        {
+            if (type == typeof(bool))
+            {
+                return Convert.ToBoolean(value); ;
+            }
+            if (type == typeof(Guid))
+            {
+                return Guid.Parse(value.ToString());
+            }
+            return value;
+        }
 
         //Call any method on a child property of a collection using reflection
         static Expression CallAny(Expression collection, Expression predicateExpression)

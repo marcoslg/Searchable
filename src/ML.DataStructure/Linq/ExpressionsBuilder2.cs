@@ -40,10 +40,10 @@ namespace ML.DataStructure.Linq
                 switch (child.UnionOperator)
                 {
                     case UnionOperator.And:
-                        resultFinal = resultFinal == null ? result : Expression.And(resultFinal, result);
+                        resultFinal = resultFinal == null ? result : Expression.AndAlso(resultFinal, result);
                         break;
                     case UnionOperator.Or:
-                        resultFinal = resultFinal == null ? result : Expression.Or(resultFinal, result);
+                        resultFinal = resultFinal == null ? result : Expression.OrElse(resultFinal, result);
                         break;
                 }
             }
