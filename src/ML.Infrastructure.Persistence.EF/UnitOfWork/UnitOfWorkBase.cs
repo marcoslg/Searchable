@@ -4,6 +4,8 @@ using ML.Data.Contracts.UnitOfWork;
 using ML.Infrastructure.Persistence.EF.Repositories;
 using System;
 using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Common.Infrastructure.EF.UnitOfWork
 {
@@ -74,6 +76,11 @@ namespace Common.Infrastructure.EF.UnitOfWork
             if (!this._disposed && disposing)
                 this._context.Dispose();
             this._disposed = true;
+        }
+
+        public Task<int> SaveAsync(CancellationToken cancellationToken = default)
+        {
+            return this._context.SaveChangesAsync(cancellationToken);
         }
     }
 }
