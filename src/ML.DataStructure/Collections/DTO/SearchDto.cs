@@ -6,13 +6,13 @@ namespace ML.DataStructure.Collections.DTO
     public class SearchDto
     {
 
-        public string FilterDescriptors
+        public string Filter
         {
             get;
             set;
         }
 
-        public string SortDescriptors
+        public string OrderBy
         {
             get;
             set;
@@ -37,8 +37,8 @@ namespace ML.DataStructure.Collections.DTO
                 Page = Page,
                 PageSize = PageSize
             };
-            result.FilterDescriptors = FilterDescriptorParser.ListFromString(FilterDescriptors);
-            result.SortDescriptors = SortDescriptorParser.ListFromString(SortDescriptors);
+            result.FilterDescriptors = FilterDescriptorParser.ListFromString(Filter);
+            result.SortDescriptors = SortDescriptorParser.ListFromString(OrderBy);
             return result;
         }
     }
